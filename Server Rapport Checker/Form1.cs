@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.IO;
 using WUApiLib;
 using System.Management;
+using System.Diagnostics;
 
 namespace Server_Rapport_Checker
 {
@@ -83,9 +84,9 @@ namespace Server_Rapport_Checker
                         CPUtprt = Convert.ToDouble(Convert.ToDouble(mo.GetPropertyValue("CurrentTemperature").ToString()) - 2732) / 10;
                         log.AppendText("CPU temp : " + CPUtprt.ToString() + " °C" + Environment.NewLine);
                     }
-                } catch (Exception er)
+                } catch (Exception)
                 {
-                    log.AppendText("Should not get CPU temp! Error: " + er);
+                    log.AppendText("Should not get CPU temp!" + Environment.NewLine);
                 }
             }));
         }
@@ -104,9 +105,9 @@ namespace Server_Rapport_Checker
                         usageTotal = usage.ToString();
                     }
                     log.AppendText("CPU Usage: " + usageTotal + "%");
-                } catch (Exception er)
+                } catch (Exception)
                 {
-                    log.AppendText("Should not get CPU usage! Error: " + er);
+                    log.AppendText("Should not get CPU usage!" + Environment.NewLine);
                 }
             }));
         }
@@ -138,6 +139,8 @@ namespace Server_Rapport_Checker
         public async void StartCheck()
         {
             log.Clear();
+            eventLogList.Clear();
+            Task.Run(() => eventLogLoad());
             log.AppendText("Server Rapport started!" + Environment.NewLine);
             log.AppendText("Checking Disk space..." + Environment.NewLine);
 
@@ -149,12 +152,41 @@ namespace Server_Rapport_Checker
             await Task.Run(() => GetWindowsUpdates());
 
             log.AppendText(Environment.NewLine + "Windows update checked!");
-            log.AppendText(Environment.NewLine + "Checking CPU..." + Environment.NewLine);
 
-            await Task.Run(() => GetCPUTemp());
-            await Task.Run(() => GetCPUUsage());
+            if (!checkCPU.Checked)
+            {
+                log.AppendText(Environment.NewLine + "Checking CPU..." + Environment.NewLine);
 
-            log.AppendText(Environment.NewLine + "CPU Checked!");
+                await Task.Run(() => GetCPUTemp());
+                await Task.Run(() => GetCPUUsage());
+
+                log.AppendText(Environment.NewLine + "CPU Checked!");
+            }
+
+            log.AppendText(Environment.NewLine + "Finished!");
+        }
+
+        public void eventLogLoad()
+        {
+            this.Invoke((MethodInvoker)(() =>
+            {
+                string eventLogName = eventLogType.Text;
+                int maxLoad = Int32.Parse(eventLogAmount.Text);
+                int i = 0;
+
+                EventLog eventLog = new EventLog();
+                eventLog.Log = eventLogName;
+
+                foreach (EventLogEntry log in eventLog.Entries)
+                {
+                    eventLogList.AppendText(log.InstanceId + " - " + log.Message + Environment.NewLine + "***********************" + Environment.NewLine);
+                    i++;
+                    if (i >= maxLoad)
+                    {
+                        break;
+                    }
+                }
+            }));
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -170,6 +202,18 @@ namespace Server_Rapport_Checker
         private void button3_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            eventLogType.DropDownStyle = ComboBoxStyle.DropDownList;
+            eventLogAmount.DropDownStyle = ComboBoxStyle.DropDownList;
+            checkCPU.Checked = true;
+        }
+
+        private void eventLogList_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

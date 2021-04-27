@@ -1,0 +1,12 @@
+C:\Users\ole\source\repos\Server Rapport Checker\Server Rapport Checker\bin\Release\Server Rapport Checker.exe.config
+C:\Users\ole\source\repos\Server Rapport Checker\Server Rapport Checker\bin\Release\Server Rapport Checker.exe
+C:\Users\ole\source\repos\Server Rapport Checker\Server Rapport Checker\bin\Release\Server Rapport Checker.pdb
+C:\Users\ole\source\repos\Server Rapport Checker\Server Rapport Checker\obj\Release\Server Rapport Checker.csprojAssemblyReference.cache
+C:\Users\ole\source\repos\Server Rapport Checker\Server Rapport Checker\obj\Release\Interop.WUApiLib.dll
+C:\Users\ole\source\repos\Server Rapport Checker\Server Rapport Checker\obj\Release\Server Rapport Checker.csproj.ResolveComReference.cache
+C:\Users\ole\source\repos\Server Rapport Checker\Server Rapport Checker\obj\Release\Server_Rapport_Checker.Form1.resources
+C:\Users\ole\source\repos\Server Rapport Checker\Server Rapport Checker\obj\Release\Server_Rapport_Checker.Properties.Resources.resources
+C:\Users\ole\source\repos\Server Rapport Checker\Server Rapport Checker\obj\Release\Server Rapport Checker.csproj.GenerateResource.cache
+C:\Users\ole\source\repos\Server Rapport Checker\Server Rapport Checker\obj\Release\Server Rapport Checker.csproj.CoreCompileInputs.cache
+C:\Users\ole\source\repos\Server Rapport Checker\Server Rapport Checker\obj\Release\Server Rapport Checker.exe
+C:\Users\ole\source\repos\Server Rapport Checker\Server Rapport Checker\obj\Release\Server Rapport Checker.pdb
